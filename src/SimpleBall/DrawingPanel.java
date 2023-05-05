@@ -5,13 +5,13 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 
 public class DrawingPanel extends JPanel {
-    private Ball[] ball;
-    private int borderLength=8;
+    private final Ball[] ball;
+    private final int borderLength=8;
 
     public DrawingPanel() {
         setBackground(Color.WHITE);
         setPreferredSize(new Dimension(500, 500));
-        ball = new Ball[30];
+        ball = new Ball[10];
         fillBalls();
 
         setFocusable(true);
@@ -30,11 +30,11 @@ public class DrawingPanel extends JPanel {
 
         for (int i = 0; i < ball.length; i++) {
 
-            int size = (int) (Math.random() * 15) + 15;
+            int size = (int) (Math.random() * 15) + 30;
             int x = (int) (Math.random() * 445) + 15 + size/2;
             int y = (int) (Math.random() * 445) + 15+ size/2;
-            int sx = (int) (Math.random() * 5)+1;
-            int sy = (int) (Math.random() * 5)+1;
+            int sx = (int) (Math.random() * 5)+10;
+            int sy = (int) (Math.random() * 5)+10;
 
             ball[i] = new Ball(size, x, y);
             ball[i].setSpeedx(sx);
@@ -51,6 +51,16 @@ public class DrawingPanel extends JPanel {
         }
 
     public void drawBorder(Graphics g) {
+        int i = 0;
+        int m = 0;
+        for (Ball b: ball){
+            g.drawString("Momentum of ball " + i +" :" +(b.getSize()*b.getVelocity()), 20,20+(i*20));
+            m+=b.getSize()*b.getVelocity();
+            i++;
+        }
+
+        g.drawString("Total Momentum :"+m,  20,(i*20)+20);
+
         Graphics2D g2 = (Graphics2D) g;
         Stroke old = g2.getStroke();
         g2.setStroke(new BasicStroke(2*borderLength));

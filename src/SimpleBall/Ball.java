@@ -19,16 +19,15 @@ public class Ball {
     }
 
     public Ball(int size, int x, int y) {
-        System.out.println(size + "|" + x + "|"+ y);
         this.size = size;
         this.x = x;
         this.y = y;
         speedx = 0;
         speedy = 0;
-        color = new Color((int)(Math.random()*256),(int)(Math.random()*256),(int)(Math.random()*256) );
+        color = new Color((int) (Math.random() * 256), (int) (Math.random() * 256), (int) (Math.random() * 256));
     }
 
-    public void move(){
+    public void move() {
         x += speedx;
         y += speedy;
     }
@@ -50,7 +49,6 @@ public class Ball {
     }
 
 
-
     public int getSize() {
         return size;
     }
@@ -63,34 +61,30 @@ public class Ball {
         return y;
     }
 
-    public void draw(Graphics g){
+    public void draw(Graphics g) {
         g.setColor(color);
-        g.fillOval(x-size/2,y-size/2,size,size);
+        g.fillOval(x - size / 2, y - size / 2, size, size);
     }
 
-    public void collide(Ball[] balls){
-        for (Ball b: balls){
+    public void collide(Ball[] balls) {
+        for (Ball b : balls) {
             if (b.equals(this)) continue;
-            if (b.x < this.x && (b.y  > this.y - this.size/2 - b.size/2) && (b.y < this.y + this.size/2 + b.size/2)){
-                if (b.x + b.size/2 >= this.x - this.size/2) {
-                    int tempx = b.speedx;
-                    b.speedx = this.speedx;
-                    this.speedx = tempx;
-                    //let v2 be b and v1 be this
-                  //  b.speedx =( 2*this.size*this.speedx/(b.size + this.size)) - b.speedx*((this.size- b.size)/(this.size+b.size));
-                  //  this.speedx = ((this.size- b.size)*this.speedx)/(this.size+b.size) + ( 2*b.size*tempx/(b.size + this.size));
-                }
-            }
-            if (b.y < this.y && (b.x  > this.x - this.size/2 - b.size/2) && (b.x < this.x + this.size/2 + b.size/2)){
-                if (b.y + b.size/2 >= this.y - this.size/2 ) {
-                    int tempy = b.speedy;
-                    b.speedy= this.speedy;
-                    this.speedy = tempy;
-                   // b.speedy =( 2*this.size*this.speedy/(b.size + this.size)) - ((this.size- b.size)*b.speedy)/(this.size+b.size);
-                   // this.speedy = this.speedy*((this.size- b.size)/(this.size+b.size)) + ( 2*b.size*tempy/(b.size + this.size));
+            double distance = Math.sqrt((b.x+b.speedx-this.speedx-this.x)*(b.x+b.speedx-this.speedx-this.x) + (b.y+b.speedy-this.speedy-this.y)*(b.y+b.speedy-this.speedy-this.y));
+            if (distance < (b.size + this.size)/2.0) {
+                System.out.println("COLLIDED");
+                int tempx = b.speedx;
+                b.speedx = this.speedx;
+                this.speedx = tempx;
 
-                }
+                int tempy = b.speedy;
+                b.speedy = this.speedy;
+                this.speedy = tempy;
             }
+
         }
+    }
+
+    public int getVelocity(){
+        return (int)(Math.sqrt((speedx*speedx) + (speedy*speedy)));
     }
 }
