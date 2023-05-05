@@ -72,13 +72,30 @@ public class Ball {
             double distance = Math.sqrt((b.x+b.speedx-this.speedx-this.x)*(b.x+b.speedx-this.speedx-this.x) + (b.y+b.speedy-this.speedy-this.y)*(b.y+b.speedy-this.speedy-this.y));
             if (distance < (b.size + this.size)/2.0) {
                 System.out.println("COLLIDED");
-                int tempx = b.speedx;
-                b.speedx = this.speedx;
-                this.speedx = tempx;
+                //m1v1+m2v2 = m1u1+m2u2. v is initial u is final
+                double tbx = b.speedx*1.0;
+                double tby = b.speedy*1.0;
+                double ttx = speedx*1.0;
+                double tty = speedy*1.0;
 
-                int tempy = b.speedy;
-                b.speedy = this.speedy;
-                this.speedy = tempy;
+                double m1 = b.size*1.0;
+                double m2 = size*1.0;
+
+                //1 is b, 2 is this
+                b.speedx = (int)(((m1- m2)/(m1+m2))*tbx + ((m2+m2)/(m1+m2))*ttx);
+                b.speedy = (int)(((m1- m2)/(m1+m2))*tby + ((m2+m2)/(m1+m2))*tty);
+
+                speedx =(int)(( (m1+m1)/(m1+m2))*tbx + ((m1- m2)/(m1+m2))*ttx);
+                speedy =(int)(( (m1+m1)/(m1+m2))*tby + ((m1- m2)/(m1+m2))*tty);
+
+//
+//                int tempx = b.speedx;
+//                b.speedx = this.speedx;
+//                this.speedx = tempx;
+//
+//                int tempy = b.speedy;
+//                b.speedy = this.speedy;
+//                this.speedy = tempy;
             }
 
         }

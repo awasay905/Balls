@@ -11,7 +11,7 @@ public class DrawingPanel extends JPanel {
     public DrawingPanel() {
         setBackground(Color.WHITE);
         setPreferredSize(new Dimension(500, 500));
-        ball = new Ball[10];
+        ball = new Ball[15];
         fillBalls();
 
         setFocusable(true);
@@ -30,7 +30,7 @@ public class DrawingPanel extends JPanel {
 
         for (int i = 0; i < ball.length; i++) {
 
-            int size = (int) (Math.random() * 15) + 30;
+            int size = (int) (Math.random() * 15) + 15;
             int x = (int) (Math.random() * 445) + 15 + size/2;
             int y = (int) (Math.random() * 445) + 15+ size/2;
             int sx = (int) (Math.random() * 5)+10;
